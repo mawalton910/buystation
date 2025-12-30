@@ -1,4 +1,4 @@
-# Buy Station - LARP Transaction & Loot System
+# Guru Games - Buy Station
 **Current Version**: BuyStation 25.3.2
 
 A specialized IoT device system built on the M5Stack Dial (ESP32-S3) for managing player transactions, loot distribution, and game mechanics in live-action role-playing events.
