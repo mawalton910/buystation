@@ -1,5 +1,5 @@
 # Buy Station M5 - Mutant Warfare LARP System
-**Current Version**: BuyStation 25.3.0
+**Current Version**: BuyStation 25.3.1
 
 A comprehensive IoT device system built on the M5Stack Dial (ESP32-S3) for managing player transactions, loot distribution, and game mechanics in live-action role-playing events.
 
@@ -288,6 +288,6 @@ For issues and questions:
 
 ---
 
-**Current Version**: BuyStation 25.3.0  
+**Current Version**: BuyStation 25.3.1
 **Last Updated**: December 30, 2025  
 **Maintained by**: mawalton910
