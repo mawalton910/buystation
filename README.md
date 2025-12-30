@@ -1,5 +1,5 @@
 # Guru Games - Buy Station
-**Current Version**: BuyStation 25.3.2
+**Current Version**: BuyStation 25.3.3
 
 A specialized IoT device system built on the M5Stack Dial (ESP32-S3) for managing player transactions, loot distribution, and game mechanics in live-action role-playing events.
 
@@ -100,5 +100,5 @@ Built with M5Stack Dial hardware, ESP32-S3 platform, and the Arduino framework.
 
 ---
 
-**Current Version**: BuyStation 25.3.2
+**Current Version**: BuyStation 25.3.3
 **Last Updated**: December 30, 2025
