@@ -1,293 +1,104 @@
-# Buy Station M5 - Mutant Warfare LARP System
-**Current Version**: BuyStation 25.3.1
+# Buy Station - LARP Transaction & Loot System
+**Current Version**: BuyStation 25.3.2
 
-A comprehensive IoT device system built on the M5Stack Dial (ESP32-S3) for managing player transactions, loot distribution, and game mechanics in live-action role-playing events.
+A specialized IoT device system built on the M5Stack Dial (ESP32-S3) for managing player transactions, loot distribution, and game mechanics in live-action role-playing events.
 
-## 🎮 Overview
+## 🎮 What It Does
 
-The Buy Station M5 is a specialized RFID-enabled device that allows players to:
-- Purchase and claim loot items using player badges
-- Browse available loot inventory with faction-specific rewards
-- Transfer inventory between players
-- View interactive terrain maps with location tracking
-- Manage game state through administrative controls
+The Buy Station is an RFID-enabled device that revolutionizes LARP gameplay by providing:
 
-## 🔧 Hardware Requirements
+### For Players
+- **Purchase & Claim Loot**: Scan your badge to browse and claim available items
+- **Loot Browsing**: Use the rotary dial to scroll through faction-specific rewards
+- **Multi-Claim Sessions**: Claim multiple items in one session before timeout
+- **Inventory Transfer**: Transfer loot between players seamlessly
+- **Interactive Maps**: View terrain maps with current location tracking
+- **Quick Badge Updates**: Fast badge scanning for relay mode integration
 
-- **M5Stack Dial** (ESP32-S3)
-- Built-in **PN532 NFC/RFID Reader**
-- 240x240 Round Display
-- Rotary Encoder with Button
-- WiFi Connectivity (2.4GHz)
+### For Game Masters
+- **WiFi Management**: Configure network settings and scan for connections
+- **Device Monitoring**: View real-time device information and status
+- **Loot Control**: Lock/unlock loot pools for game flow management
+- **Mode Switching**: Toggle between different operational modes
+- **Variable Management**: View and clear stored game variables
+- **Remote Updates**: Push firmware updates to all devices simultaneously
 
-## 📦 Features
+## 🔧 Hardware
 
-### Player Modes
-- **Buy Station 2 Mode**: Multi-claim loot system with session management
-- **Backpack Mode**: Claim and unlock loot items
-- **Loot Transfer Mode**: Transfer inventory between factions
-- **Relay Mode**: Quick badge scanning for game integration
-- **Map Mode**: Display terrain maps with current location
+- **M5Stack Dial** (ESP32-S3) with built-in RFID reader
+- 240x240 round touchscreen display
+- Rotary encoder with button
+- WiFi connectivity for server integration
 
-### Administrative Features
-- WiFi management and network scanning
-- Device information display
-- Loot lock/unlock controls
-- Variable viewing and clearing
-- Mode switching capabilities
+## 📦 Operational Modes
 
-### Over-the-Air (OTA) Updates
-- **Remote firmware updates** via GitHub
-- Triggered by scanning designated RFID tag
-- Automatic download and installation
-- Progress display with percentage and download stats
-- Automatic reboot after successful update
+### 1. Buy Station 2 Mode (Default)
+Multi-claim loot system where players can:
+- Scan badge to load available loot
+- Browse items using rotary encoder
+- Claim multiple items in one session
+- Auto-timeout protection with session management
 
-## 🚀 Getting Started
+### 2. Backpack Mode
+Simple claim and unlock system for loot items with badge-based inventory management.
 
-### Prerequisites
+### 3. Loot Transfer Mode
+Transfer inventory items between different player factions with validation and tracking.
 
-1. **Arduino IDE** with ESP32 board support
-2. **M5Dial Library**: Install via Arduino Library Manager
-3. **Required Libraries**:
-   - WiFi (ESP32 core)
-   - HTTPClient
-   - ArduinoJson
-   - WiFiClientSecure
-   - HTTPUpdate
+### 4. Relay Mode
+Quick badge scanning mode for game integration and badge status updates.
 
-### Installation
+### 5. Map Mode
+Display interactive terrain maps with location markers for navigation during gameplay.
 
-1. Configure your settings in `buyStation_M5v3.ino`:
-   ```cpp
-   const char* WIFI_SSID = "YourWiFiSSID";
-   const char* WIFI_PASSWORD = "YourWiFiPassword";
-   ```
+## 🎯 How Players Use It
 
-2. Update device identifiers in `secrets.h`:
-   ```cpp
-   const char* DEVICE_SERIAL = "your_device_serial";
-   const char* DEVICE_MAC = "your_mac_address";
-   ```
+1. **Scan Your Badge** → System identifies you and loads your available loot
+2. **Browse Items** → Rotate the dial to see what's available
+3. **Claim Items** → Press the button to claim the item you want
+4. **Repeat** → Continue claiming items until you're done
+5. **Auto-Save** → Session ends automatically, all claims are saved
 
-3. Update API endpoints in `config.h` if needed
+## 🛠️ Administrative Features
 
-4. Select **Crabik SLot ESP32-S3** as your board
+Game masters can access admin mode by scanning an authorized badge:
+- Monitor device health and WiFi status
+- Switch between operational modes
+- Control loot availability
+- Update firmware remotely
+- View system logs and variables
 
-5. Upload to your M5Stack Dial device
+## 📡 Over-the-Air Updates
 
-## 📡 OTA Updates
+Devices support remote firmware updates for seamless version management:
+- Scan a designated trigger card to start update
+- Device automatically downloads and installs new firmware
+- Progress displayed with percentage and download statistics
+- Automatic reboot after successful installation
+- All devices can be updated simultaneously
 
-### Triggering an Update
+## 🎮 Game Integration
 
-1. Scan designated OTA trigger RFID card
-2. Device connects to OTA WiFi (can be different from normal WiFi)
-3. Downloads firmware from: `https://raw.githubusercontent.com/[USER]/[REPO]/main/update.ino.bin`
-4. Displays progress with percentage and download size
-5. Installs and reboots automatically
-
-### Deploying New Firmware
-
-1. **Export Compiled Binary**:
-   - Arduino IDE → Sketch → Export Compiled Binary
-   
-2. **Rename the file** to: `update.ino.bin` (must match FIRMWARE_FILENAME in OTAUpdate.h)
-
-3. **Upload to GitHub**:
-   - Place file in the **root** of the `main` branch
-   - Commit and push changes
-
-4. **Deploy**:
-   - Scan the OTA trigger card on any device
-   - All devices will update to the new version
-
-### OTA Configuration
-
-Configure in `OTAUpdate.h`:
-```cpp
-// OTA Trigger Card (scan to start update)
-const String OTA_TRIGGER_UIDS[] = {
-    "YOUR_OTA_TAG_UID",  // Add more trigger cards as needed
-};
-
-// Update WiFi (can be different from normal WiFi)
-const char* OTA_WIFI_SSID = "YourOTAWiFi";
-const char* OTA_WIFI_PASSWORD = "YourOTAPassword";
-
-// GitHub Settings
-const char* GITHUB_USER = "your_github_username";
-const char* GITHUB_REPO = "your_repository_name";
-const char* FIRMWARE_FILENAME = "update.ino.bin";
-String targetBranch = "main";
-```
-
-## 🎯 Usage
-
-### Admin Access
-
-Scan admin badge to enter admin mode. Navigate using rotary encoder:
-- **Rotate**: Scroll through menu
-- **Press**: Select option
-- **Scan Admin Badge Again**: Exit admin mode
-
-### Device Modes
-
-Navigate admin menu using rotary encoder:
-- **Rotate**: Scroll through options
-- **Press**: Select option
-- **Scan Admin Badge Again**: Exit admin mode
-
-Available admin options:
-1. Device Info
-2. WiFi Status
-3. WiFi Reconnect
-4. WiFi Scan/Connect
-5. Loot Lock Management
-6. Backpack Mode
-7. Buy Station 2 Mode (Default)
-8. Loot Transfer Mode
-9. Relay Mode
-10. Map Mode
-11. Development Mode
-12. View Variables
-13. Clear Variables
-14. Exit Admin
-
-### Buy Station 2 Workflow
-
-1. **Scan Player Badge** → System fetches available loot
-2. **Browse Items** → Use rotary encoder to view loot
-3. **Press Button** → Claim selected item
-4. **Repeat** → Claim multiple items in one session
-5. **Auto-Timeout** → Session ends after inactivity
-
-## 📁 Project Structure
-
-```
-buyStation_M5v3/
-├── buyStation_M5v3.ino          # Main program file
-├── OTAUpdate.h                  # OTA update functionality
-├── config.h                     # Configuration settings
-├── secrets.h                    # WiFi and device credentials
-├── BadgeUtils.h                 # RFID badge utilities
-├── ApiClient.h                  # API communication
-├── WiFiManager.h                # WiFi management
-├── ErrorHandler.h               # Error message handling
-├── BuyStation2.h                # Buy Station 2 mode
-├── BackpackMode.h               # Backpack functionality
-├── LootTransferMode.h           # Loot transfer system
-├── MapMode.h                    # Map display mode
-├── M5DialControl.h              # Display controls
-├── initSequence_M5.h            # Initialization routines
-├── AdminDeviceInfo.h            # Device info display
-├── AdminLootLock.h              # Loot lock controls
-├── AdminWiFi.h                  # WiFi admin functions
-└── Documents/
-    ├── OTA_UPDATE_GUIDE.md      # Complete OTA documentation
-    ├── OTA_QUICK_REFERENCE.md   # Quick OTA setup guide
-    ├── OTA_ARCHITECTURE.md      # System architecture diagrams
-    ├── ADMIN_MODE_GUIDE.md      # Admin mode documentation
-    ├── API_MIGRATION_GUIDE.md   # API integration guide
-    └── SUMMARY.md               # Project summary
-```
+The system integrates with backend servers to:
+- Track player badge data in real-time
+- Manage faction-based loot distribution
+- Record transaction history
+- Synchronize game state across all devices
+- Provide analytics for game balance
 
 ## 🔐 Security
 
-- HTTPS/TLS encryption for all API calls
-- WiFiClientSecure for OTA downloads
-- Physical RFID access required for admin functions
-- Session timeout protection (configurable)
-- Dedicated WiFi network for OTA updates
-
-## 🌐 API Integration
-
-The system integrates with a backend API for:
-- Player badge data retrieval
-- Loot inventory management
-- Transaction recording
-- Faction management
-- Game state synchronization
-
-**Primary API Endpoints:**
-```cpp
-const String API_ENDPOINT = "https://your-server.com/api/endpoint";
-const String LOOT_ENDPOINT = "https://your-server.com/api/lootManagement";
-```
-
-**Data Submitted:**
-- Player badge UUID
-- Loot item claims and transfers
-- Faction information
-- Device identifiers (serial, MAC)
-
-API endpoints configured in `ApiClient.h`.
-
-## 🐛 Troubleshooting
-
-### WiFi Connection Issues
-- Ensure 2.4GHz WiFi (ESP32 doesn't support 5GHz)
-- Check SSID and password in configuration files
-- Scan admin badge → WiFi Status to diagnose
-- Use "WiFi Reconnect" option in admin menu
-
-### OTA Update Failures
-- **"WIFI FAILED"**: Check OTA WiFi credentials in `OTAUpdate.h`
-- **"UPDATE FAILED"**: Verify `.bin` file exists at GitHub URL
-- **"NO UPDATE AVAILABLE"**: Check branch name and filename
-- Test URL in browser: `https://raw.githubusercontent.com/[USER]/[REPO]/main/update.ino.bin`
-
-### RFID Read Issues
-- Ensure badge is close to device (within 2-3 cm)
-- Check Serial Monitor (115200 baud) for UID readings
-- Verify badge UID matches configured values
-- Allow debounce time between scans (2 seconds default)
-
-## 📊 Serial Monitor
-
-Connect at **115200 baud** for debug output:
-- WiFi connection status with IP address
-- RFID card UIDs as they're scanned
-- API request/response logs
-- Loot transaction confirmations
-- OTA update progress
-- Error messages and stack traces
-
-## 🔄 Version Control
-
-Current firmware version defined in `config.h`:
-```cpp
-#define FIRMWARE_VERSION "BuyStation 25.1.0"
-```
-
-Version history managed through GitHub releases. Use the OTA system to deploy updates to all devices simultaneously.
-
-## 📝 License
-
-[Add your license here]
-
-## 👥 Contributors
-
-- [Your Name/Team]
-
-## 🤝 Contributing
-
-[Add contribution guidelines if applicable]
-
-## 📧 Support
-
-For issues and questions:
-- Open an issue on GitHub
-- [Add contact information]
+- Physical RFID badge required for all transactions
+- Faction-based access control
+- Session timeout protection
+- Encrypted communication with backend servers
+- Admin-only access for critical functions
 
 ## 🙏 Acknowledgments
 
-- Built with M5Stack Dial hardware
-- ESP32-S3 platform
-- Arduino framework
-- M5Dial library by M5Stack
+Built with M5Stack Dial hardware, ESP32-S3 platform, and the Arduino framework.
 
 ---
 
-**Current Version**: BuyStation 25.3.1
-**Last Updated**: December 30, 2025  
-**Maintained by**: mawalton910
+**Current Version**: BuyStation 25.3.2
+**Last Updated**: December 30, 2025
