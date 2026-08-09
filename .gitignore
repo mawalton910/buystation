@@ -1,2 +1,4 @@
 **/build/*
 !**/build/update.ino.bin
+secrets.h
+desktop.ini
